@@ -3,8 +3,29 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { body, validationResult } = require('express-validator');
+const helmet = require('helmet');
 
 const app = express();
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "default-src": ["'self'"];
+        "base-uri": ["'self'"];
+        "font-src": ["'self'", "https:", "data:"];
+        "form-action": ["'self'"];
+        "frame-ancestors": ["'self'"];
+        "img-src": ["'self'", "data:"];
+        "object-src": ["'none'"];
+        "script-src": ["'self'"];
+        "script-src-attr": ["'none'"];
+        "style-src": ["'self'", "https:", "unsafe-incline:"];
+        "upgrade-insecure-requests": []
+      },
+      reportOnly: true,
+    },
+  }),
+);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
