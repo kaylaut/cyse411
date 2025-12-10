@@ -7,23 +7,12 @@ const helmet = require('helmet');
 
 const app = express();
 app.use(
-  helmet({
-    contentSecurityPolicy: {
-      useDefaults: false,
-      directives: {
-        "default-src": ["'self'"],
-        "base-uri": ["'self'"],
-        "font-src": ["'self'", "https:", "data:"],
-        "form-action": ["'self'"],
-        "frame-ancestors": ["'none'"],
-        "img-src": ["'self'", "data:"],
-        "object-src": ["'none'"],
-        "script-src": ["'self'"],
-        "script-src-attr": ["'none'"],
-        "style-src": ["'self'", "https:"],
-        "upgrade-insecure-requests": [],
-      }
-    }
+  helmet.contentSecurityPolicy({
+    directives: {
+      "default-src": ["'self'"],
+      "form-action": ["'self'"],
+      "frame-ancestors": ["'none'"],
+    },
   })
 );
 app.use(express.urlencoded({ extended: false }));
